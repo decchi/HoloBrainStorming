@@ -35,7 +35,7 @@ public class MakeStickyManager : Singleton<MakeStickyManager>
     public void MakeSticky(string text)
     {
         GameObject Sticky = GameObject.Instantiate(HoloSticky);
-        Sticky.transform.transform.Find("Image").transform.transform.Find("Text").GetComponent<Text>().text = text;
+        Sticky.transform.transform.Find("HoloStickyUI").transform.transform.Find("Image").transform.transform.Find("Text").GetComponent<Text>().text = text;
         stickyList.Add(Sticky);
         Sticky.transform.position = Camera.main.transform.TransformPoint(new Vector3(0f, 0f, 1f));
         Sticky.transform.rotation = Quaternion.LookRotation(Sticky.transform.position - Camera.main.transform.position);
