@@ -21,6 +21,8 @@ namespace HoloToolkit.Sharing.Tests
             public GameObject HeadObject;
         }
 
+        private int counter = 0;
+
         /// <summary>
         /// Keep a list of the remote heads, indexed by XTools userID
         /// </summary>

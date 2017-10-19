@@ -17,9 +17,9 @@ public class ShareSticky : MonoBehaviour, IInputClickHandler
         if (!isShared)
         {
             isShared = true;
-            float randamX = UnityEngine.Random.Range(-1.5f, 1.5f);
-            float randamY = UnityEngine.Random.Range(0.3f, 1.3f);
-            float randamZ = UnityEngine.Random.Range(-1.5f, 1.5f);
+            float randamX = UnityEngine.Random.Range(-1f, 1f);
+            float randamY = UnityEngine.Random.Range(0.3f, 1f);
+            float randamZ = UnityEngine.Random.Range(-1f, 1f);
             Vector3 MoveToPos = new Vector3(MakeStickyManager.Instance.MyStickyHolder.position.x + randamX, MakeStickyManager.Instance.MyStickyHolder.position.y + randamY, MakeStickyManager.Instance.MyStickyHolder.position.z + randamZ);
             iTween.MoveTo(Sticky, MoveToPos, 7f);
             Text tex = Sticky.transform.transform.Find("HoloStickyUI").transform.transform.Find("Image").transform.transform.Find("Text").GetComponent<Text>();

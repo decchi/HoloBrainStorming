@@ -71,10 +71,14 @@ public class UserColorManager : Singleton<UserColorManager>
         {
             
         }
-        usersTracker = SharingStage.Instance.SessionUsersTracker;
-        mynumber = usersTracker.CurrentUsers.Count;
-        myColor = colorMap[mynumber];
-        Debug.Log("mynumber=" + mynumber);
+        if (mynumber == 0)
+        {
+            usersTracker = SharingStage.Instance.SessionUsersTracker;
+            mynumber = usersTracker.CurrentUsers.Count;
+            myColor = colorMap[mynumber];
+            Debug.Log("mynumber=" + mynumber);
+        }
+
 
     }
 
