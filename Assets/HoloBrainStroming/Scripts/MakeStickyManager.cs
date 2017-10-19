@@ -14,9 +14,11 @@ public class MakeStickyManager : Singleton<MakeStickyManager>
     public Transform MyStickyHolder;
     private List<GameObject> stickyList = new List<GameObject>();
     public bool canInput = false;
+    public bool isSelectingSticky = false;
 
     // Use this for initialization
     void Start () {
+        MyStickyHolder.position = Camera.main.transform.TransformPoint(new Vector3(0f, 0f, 1f));
         m_DictationRecognizer = new DictationRecognizer();
         m_DictationRecognizer.InitialSilenceTimeoutSeconds = 30f;
         m_DictationRecognizer.DictationResult += (text, confidence) =>
@@ -37,7 +39,6 @@ public class MakeStickyManager : Singleton<MakeStickyManager>
         stickyList.Add(Sticky);
         Sticky.transform.position = Camera.main.transform.TransformPoint(new Vector3(0f, 0f, 1f));
         Sticky.transform.rotation = Quaternion.LookRotation(Sticky.transform.position - Camera.main.transform.position);
-        Sticky.transform.parent = MyStickyHolder;
         //Sticky.transform.localScale = new Vector3(0.148f, 0.148f, 0.148f);
 
 
@@ -45,6 +46,6 @@ public class MakeStickyManager : Singleton<MakeStickyManager>
 
     // Update is called once per frame
     void Update () {
-		
-	}
+
+    }
 }

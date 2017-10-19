@@ -361,7 +361,7 @@ GameObject:
   - component: {fileID: 369452799}
   - component: {fileID: 369452798}
   m_Layer: 0
-  m_Name: MyStickyHolder
+  m_Name: DummyAnchor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -498,6 +498,11 @@ Prefab:
     - target: {fileID: 4000010560871102, guid: d379ed0a5618c9f479f58bd83a2d0ad3, type: 2}
       propertyPath: m_RootOrder
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 20000013304850028, guid: d379ed0a5618c9f479f58bd83a2d0ad3,
+        type: 2}
+      propertyPath: near clip plane
+      value: 0.01
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: d379ed0a5618c9f479f58bd83a2d0ad3, type: 2}
@@ -773,6 +778,9 @@ MonoBehaviour:
   FukidashiUI: {fileID: 50052578}
   MyStickyHolder: {fileID: 369452801}
   canInput: 0
+  isSelectingSticky: 0
+  SelectingSticky: {fileID: 0}
+  SelectingStickyImage: {fileID: 0}
 --- !u!114 &1524559921
 MonoBehaviour:
   m_ObjectHideFlags: 0
