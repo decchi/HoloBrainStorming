@@ -20,14 +20,14 @@ public class MakeStickyManager : Singleton<MakeStickyManager>
     public GameObject SelectingSticky;
     // Use this for initialization
     void Start () {
-        MyStickyHolder.position = Camera.main.transform.TransformPoint(new Vector3(0f, 0f, 1f));
+        
         m_DictationRecognizer = new DictationRecognizer();
         m_DictationRecognizer.InitialSilenceTimeoutSeconds = 30f;
         m_DictationRecognizer.DictationResult += (text, confidence) =>
         {
             if (canInput)
             {
-                MakeSticky(text, Camera.main.transform.TransformPoint(new Vector3(0f, 0f, 1f)));
+                MakeSticky(text, Camera.main.transform.TransformPoint(new Vector3(0f, 0f, 1f)),0);
             }
             
         };
@@ -102,16 +102,19 @@ public class MakeStickyManager : Singleton<MakeStickyManager>
 
         Vector3 StickyPos = CustomMessages.Instance.ReadVector3(msg);
         string message = msg.ReadString();
-
-        MakeSticky(message, StickyPos);
+        int colorIndex = msg.ReadInt32();
+        Debug.Log("colorIndex=" + colorIndex);
+        MakeSticky(message, StickyPos, colorIndex);
     }
 
 
 
-    public void MakeSticky(string text,Vector3 pos)
+    public void MakeSticky(string text,Vector3 pos,int colorIndex)
     {
         GameObject Sticky = GameObject.Instantiate(HoloSticky);
-        Sticky.transform.transform.Find("HoloStickyUI").transform.transform.Find("Image").transform.transform.Find("Text").GetComponent<Text>().text = text;
+        Text tex = Sticky.transform.transform.Find("HoloStickyUI").transform.transform.Find("Image").transform.transform.Find("Text").GetComponent<Text>();
+        tex.text = text;
+        tex.color =  UserColorManager.Instance.colorMap[colorIndex];
         stickyList.Add(Sticky);
         Sticky.transform.position = pos; 
         Sticky.transform.rotation = Quaternion.LookRotation(Sticky.transform.position - Camera.main.transform.position);

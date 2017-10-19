@@ -22,8 +22,10 @@ public class ShareSticky : MonoBehaviour, IInputClickHandler
             float randamZ = UnityEngine.Random.Range(-1.5f, 1.5f);
             Vector3 MoveToPos = new Vector3(MakeStickyManager.Instance.MyStickyHolder.position.x + randamX, MakeStickyManager.Instance.MyStickyHolder.position.y + randamY, MakeStickyManager.Instance.MyStickyHolder.position.z + randamZ);
             iTween.MoveTo(Sticky, MoveToPos, 7f);
-
-            CustomMessages.Instance.SendShareSticky(MoveToPos, Sticky.transform.transform.Find("HoloStickyUI").transform.transform.Find("Image").transform.transform.Find("Text").GetComponent<Text>().text);
+            Text tex = Sticky.transform.transform.Find("HoloStickyUI").transform.transform.Find("Image").transform.transform.Find("Text").GetComponent<Text>();
+            tex.color = UserColorManager.Instance.myColor;
+           
+            CustomMessages.Instance.SendShareSticky(MoveToPos, tex.text, UserColorManager.Instance.mynumber);
         }
         else
         {

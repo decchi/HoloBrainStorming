@@ -876,6 +876,7 @@ GameObject:
   - component: {fileID: 1524559920}
   - component: {fileID: 1524559921}
   - component: {fileID: 1524559922}
+  - component: {fileID: 1524559923}
   m_Layer: 0
   m_Name: Singleton
   m_TagString: Untagged
@@ -935,6 +936,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cae8f3c88e9704a4393cb8d904b62372, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1524559923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1524559918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 611aec6b14a73904ca7ff4f2080cfe9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  myColor: {r: 1, g: 1, b: 1, a: 1}
+  mynumber: 0
 --- !u!1001 &1700987841
 Prefab:
   m_ObjectHideFlags: 0

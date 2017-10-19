@@ -140,7 +140,7 @@ namespace HoloToolkit.Sharing.Tests
             }
         }
 
-        public void SendShareSticky(Vector3 position, string message)
+        public void SendShareSticky(Vector3 position, string message,int colorIndex)
         {
             // If we are connected to a session, broadcast our head info
             if (serverConnection != null && serverConnection.IsConnected())
@@ -150,7 +150,7 @@ namespace HoloToolkit.Sharing.Tests
 
                 AppendVector3(msg, position);
                 msg.Write(message);
-                
+                msg.Write(colorIndex);
 
                 // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
                 serverConnection.Broadcast(
@@ -161,26 +161,7 @@ namespace HoloToolkit.Sharing.Tests
             }
         }
 
-        public void CreateShareSticky(Vector3 position, string message)
-        {
-            // If we are connected to a session, broadcast our head info
-            if (serverConnection != null && serverConnection.IsConnected())
-            {
-                // Create an outgoing network message to contain all the info we want to send
-                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.SharedSticky);
 
-                AppendVector3(msg, position);
-                msg.Write(message);
-
-
-                // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
-                serverConnection.Broadcast(
-                    msg,
-                    MessagePriority.Immediate,
-                    MessageReliability.UnreliableSequenced,
-                    MessageChannel.Avatar);
-            }
-        }
 
         protected override void OnDestroy()
         {
