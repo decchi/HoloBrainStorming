@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.Windows.Speech;
 using System;
 using UnityEngine.UI;
+using HoloToolkit.Sharing.Tests;
+using HoloToolkit.Sharing;
 
 public class MakeStickyManager : Singleton<MakeStickyManager>
 {
@@ -25,19 +27,93 @@ public class MakeStickyManager : Singleton<MakeStickyManager>
         {
             if (canInput)
             {
-                MakeSticky(text);
+                MakeSticky(text, Camera.main.transform.TransformPoint(new Vector3(0f, 0f, 1f)));
             }
             
         };
-        
+        CustomMessages.Instance.MessageHandlers[CustomMessages.TestMessageID.SharedSticky] = SharedSticky;
+
+        // SharingStage should be valid at this point, but we may not be connected.
+        if (SharingStage.Instance.IsConnected)
+        {
+            Connected();
+        }
+        else
+        {
+            SharingStage.Instance.SharingManagerConnected += Connected;
+        }
     }
 
-    public void MakeSticky(string text)
+    private void Connected(object sender = null, EventArgs e = null)
+    {
+        SharingStage.Instance.SharingManagerConnected -= Connected;
+
+        SharingStage.Instance.SessionUsersTracker.UserJoined += UserJoinedSession;
+        SharingStage.Instance.SessionUsersTracker.UserLeft += UserLeftSession;
+    }
+
+    protected override void OnDestroy()
+    {
+        if (SharingStage.Instance != null)
+        {
+            if (SharingStage.Instance.SessionUsersTracker != null)
+            {
+                SharingStage.Instance.SessionUsersTracker.UserJoined -= UserJoinedSession;
+                SharingStage.Instance.SessionUsersTracker.UserLeft -= UserLeftSession;
+            }
+        }
+
+        base.OnDestroy();
+    }
+
+    /// <summary>
+    /// Called when a new user is leaving the current session.
+    /// </summary>
+    /// <param name="user">User that left the current session.</param>
+    private void UserLeftSession(User user)
+    {
+        int userId = user.GetID();
+        if (userId != SharingStage.Instance.Manager.GetLocalUser().GetID())
+        {
+            //いなくなった時の処理
+        }
+    }
+
+    /// <summary>
+    /// Called when a user is joining the current session.
+    /// </summary>
+    /// <param name="user">User that joined the current session.</param>
+    private void UserJoinedSession(User user)
+    {
+        if (user.GetID() != SharingStage.Instance.Manager.GetLocalUser().GetID())
+        {
+            //GetRemoteHeadInfo(user.GetID());
+        }
+    }
+
+    /// <summary>
+    /// Called when a remote user sends a head transform.
+    /// </summary>
+    /// <param name="msg"></param>
+    private void SharedSticky(NetworkInMessage msg)
+    {
+        // Parse the message
+        long userID = msg.ReadInt64();
+
+        Vector3 StickyPos = CustomMessages.Instance.ReadVector3(msg);
+        string message = msg.ReadString();
+
+        MakeSticky(message, StickyPos);
+    }
+
+
+
+    public void MakeSticky(string text,Vector3 pos)
     {
         GameObject Sticky = GameObject.Instantiate(HoloSticky);
         Sticky.transform.transform.Find("HoloStickyUI").transform.transform.Find("Image").transform.transform.Find("Text").GetComponent<Text>().text = text;
         stickyList.Add(Sticky);
-        Sticky.transform.position = Camera.main.transform.TransformPoint(new Vector3(0f, 0f, 1f));
+        Sticky.transform.position = pos; 
         Sticky.transform.rotation = Quaternion.LookRotation(Sticky.transform.position - Camera.main.transform.position);
         //Sticky.transform.localScale = new Vector3(0.148f, 0.148f, 0.148f);
 

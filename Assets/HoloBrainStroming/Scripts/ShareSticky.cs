@@ -4,6 +4,8 @@ using UnityEngine;
 using HoloToolkit.Unity.InputModule;
 using System;
 using UnityEngine.UI;
+using HoloToolkit.Sharing.Tests;
+using HoloToolkit.Sharing;
 
 public class ShareSticky : MonoBehaviour, IInputClickHandler
 {
@@ -20,6 +22,8 @@ public class ShareSticky : MonoBehaviour, IInputClickHandler
             float randamZ = UnityEngine.Random.Range(-1.5f, 1.5f);
             Vector3 MoveToPos = new Vector3(MakeStickyManager.Instance.MyStickyHolder.position.x + randamX, MakeStickyManager.Instance.MyStickyHolder.position.y + randamY, MakeStickyManager.Instance.MyStickyHolder.position.z + randamZ);
             iTween.MoveTo(Sticky, MoveToPos, 7f);
+
+            CustomMessages.Instance.SendShareSticky(MoveToPos, Sticky.transform.transform.Find("HoloStickyUI").transform.transform.Find("Image").transform.transform.Find("Text").GetComponent<Text>().text);
         }
         else
         {
@@ -31,8 +35,8 @@ public class ShareSticky : MonoBehaviour, IInputClickHandler
 
     // Use this for initialization
     void Start () {
-		
-	}
+
+    }
 	
 	// Update is called once per frame
 	void Update () {

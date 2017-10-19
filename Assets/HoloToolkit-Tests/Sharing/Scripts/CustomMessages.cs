@@ -21,6 +21,7 @@ namespace HoloToolkit.Sharing.Tests
         public enum TestMessageID : byte
         {
             HeadTransform = MessageID.UserMessageIDStart,
+            SharedSticky = MessageID.UserMessageIDStart + 1,
             Max
         }
 
@@ -129,6 +130,48 @@ namespace HoloToolkit.Sharing.Tests
                 NetworkOutMessage msg = CreateMessage((byte)TestMessageID.HeadTransform);
 
                 AppendTransform(msg, position, rotation);
+
+                // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Avatar);
+            }
+        }
+
+        public void SendShareSticky(Vector3 position, string message)
+        {
+            // If we are connected to a session, broadcast our head info
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                // Create an outgoing network message to contain all the info we want to send
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.SharedSticky);
+
+                AppendVector3(msg, position);
+                msg.Write(message);
+                
+
+                // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
+                serverConnection.Broadcast(
+                    msg,
+                    MessagePriority.Immediate,
+                    MessageReliability.UnreliableSequenced,
+                    MessageChannel.Avatar);
+            }
+        }
+
+        public void CreateShareSticky(Vector3 position, string message)
+        {
+            // If we are connected to a session, broadcast our head info
+            if (serverConnection != null && serverConnection.IsConnected())
+            {
+                // Create an outgoing network message to contain all the info we want to send
+                NetworkOutMessage msg = CreateMessage((byte)TestMessageID.SharedSticky);
+
+                AppendVector3(msg, position);
+                msg.Write(message);
+
 
                 // Send the message as a broadcast, which will cause the server to forward it to all other users in the session.
                 serverConnection.Broadcast(

@@ -8,7 +8,7 @@ public class OnClick : MonoBehaviour ,IInputClickHandler{
 
     void IInputClickHandler.OnInputClicked(InputClickedEventData eventData)
     {
-        MakeStickyManager.Instance.MakeSticky("test");
+        //MakeStickyManager.Instance.MakeSticky("test");
 
     }
 
