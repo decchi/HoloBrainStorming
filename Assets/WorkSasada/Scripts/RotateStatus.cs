@@ -8,7 +8,7 @@ public class RotateStatus : MonoBehaviour
     float cnt = 0.0f;
 
     // 公転半径の設定
-    float tmpRadius = 2.0f;
+    float tmpRadius = 1f;
     // 公転の中心の設定
     public Transform pos;
 
@@ -23,9 +23,9 @@ public class RotateStatus : MonoBehaviour
     {
         rotateStatMsg(tmpRadius, pos.position);
 
-        if (cnt % 120 == 0) {
-            chngMsg((int)((cnt % 30) % 4)+1);
-        }
+        //if (cnt % 120 == 0) {
+        //    chngMsg((int)((cnt % 30) % 4)+1);
+        //}
 
 
     }
@@ -40,7 +40,7 @@ public class RotateStatus : MonoBehaviour
         // 速度（値が大きいほど高速）
         float speed = 0.25f;
         this.transform.Rotate(new Vector3(0.0f, speed * 360.0f / 60.0f , 0.0f));
-        this.transform.position = radius * new Vector3(-1.0f * Mathf.Sin(speed * 2.0f * Mathf.PI * cnt / 60.0f), 0, -1.0f * Mathf.Cos(speed * 2.0f * Mathf.PI * cnt / 60.0f)) + centerPosition;
+        this.transform.position = radius * new Vector3(-1.0f * Mathf.Sin(speed * 2.0f * Mathf.PI * cnt / 60.0f),1f , -1.0f * Mathf.Cos(speed * 2.0f * Mathf.PI * cnt / 60.0f)) + centerPosition;
     }
 
     // 引数を元に、会議のステータスを示すメッセージを変更する
