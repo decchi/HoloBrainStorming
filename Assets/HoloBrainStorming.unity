@@ -779,6 +779,7 @@ MonoBehaviour:
   MyStickyHolder: {fileID: 369452801}
   canInput: 0
   isSelectingSticky: 0
+  SelectingSticky: {fileID: 0}
 --- !u!114 &1524559921
 MonoBehaviour:
   m_ObjectHideFlags: 0

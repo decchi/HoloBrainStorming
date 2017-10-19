@@ -15,7 +15,7 @@ public class MakeStickyManager : Singleton<MakeStickyManager>
     private List<GameObject> stickyList = new List<GameObject>();
     public bool canInput = false;
     public bool isSelectingSticky = false;
-
+    public GameObject SelectingSticky;
     // Use this for initialization
     void Start () {
         MyStickyHolder.position = Camera.main.transform.TransformPoint(new Vector3(0f, 0f, 1f));
